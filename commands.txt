@@ -1,6 +1,9 @@
 Start up virtual env:
 widship_virtualenv\Scripts\activate
 
+Push updates to github:
+git push -u origin main
+
 django-admin startproject widship
 django-admin startapp admin
 
@@ -15,6 +18,8 @@ python manage.py createsuperuser
 Log into database:
 psql -d widship -U postgres    
 
+
+Code written in Virtual Studio Code
 
 Many to many relationships:
 https://stackoverflow.com/questions/48359845/django-how-to-restrict-profile-page-to-only-friends 
