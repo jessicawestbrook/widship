@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<h1>My Friends</h1>
+
+{% for friend in friend_list %}
+
+<a href="profile" class="profile-card">
+<div class="card">
+    <div class="card-header">
+      {{ friend.profile.profile_name }}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ friend.profile.profile_photo }}</h5>
+      {% if friend.profile.birth_date %}
+      Age {{friend.profile.age}}<br/>
+      {% endif %}
+      {% if friend.profile.gender %}
+          {{ friend.profile.gender }} <br/>
+      {% endif %}
+      {% if friend.profile.city %}
+          From {{ friend.profile.city }}
+          {% if friend.profile.state %}, {{friend.profile.state}}{% endif %}
+          {% if friend.profile.country %} {{friend.profile.country}}{% endif %}
+      {% endif %}
+      <p class="card-text">{{ friend.profile.bio }}</p>
+    </div>
+  </div>
+</a>
+<br/>
+
+{% empty %}
+
+<p>
+  You haven't added any friends.
+  <a href="/user/search">Add friends</a>
+</p>
+
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,10 @@
+.sidenav-content {
+    position: relative;
+    height: 500px;
+    margin-left: 350px;
+}
+
+.sidenav {
+    position: fixed;
+    max-width: 20rem;
+}

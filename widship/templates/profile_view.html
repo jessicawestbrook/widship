@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+{% load mathfilters %}
+
+<link rel="stylesheet" type="text/css" href="{% static '/widship/css/profile.css' %}" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+
+<class="profile-card">
+    <div class="card">
+        <div class="card-header">
+
+<div class="profile">
+    <p>
+        {% if user.profile.profile_photo %}
+            <img class="profile-photo" src="{{ user.profile.profile_photo.url }}" alt="Profile Photo">
+        {% else %}
+            <img class="profile-photo" src="{% static 'icons/default_avatar.png' %}" alt="Profile Photo">
+        {% endif %}
+    </p>
+    <h1 id="name" class="card-title">{% firstof user.profile.profile_name user.get_full_name %} <a href='/user/profile_form'><i class="fas fa-edit"></i></a></h1>
+
+        {% if user.profile.birth_date %}
+            Age {{user.profile.age}}<br/>
+        {% endif %}
+        {% if user.profile.gender %}
+            {{ user.profile.gender }} <br/>
+        {% endif %}
+        {% if user.profile.city %}
+            From {{ user.profile.city }}
+            {% if user.profile.state %}, {{user.profile.state}}{% endif %}
+            {% if user.profile.country %} {{user.profile.country}}{% endif %}
+        {% endif %}
+</div>
+</div>
+    <div class="card-body">
+        <div class="card-text">
+    <h3>About Me</h3>
+    <p>
+        {{ user.profile.bio }}
+    </p>
+
+    <br/>
+    <br/>
+
+    <h3>Partner profile</h3>
+
+    {{ user.profile.partner_name }}<br/>
+
+    {% if user.profile.partner_profile_photo %}
+        <img class="profile-photo" src="{{ user.profile.partner_profile_photo.url }}" alt="Profile Photo">
+    {% endif %}
+    <p> 
+        {% if user.profile.anniversary %}
+            Anniversary: {{ user.profile.anniversary }} <br/>
+        {% endif %}
+        {% if user.profile.partner_birth_date %}
+            Birthdate: {{ user.profile.partner_birth_date }} <br/>
+        {% endif %}
+        {% if user.profile.years_together %}
+            Years together: {{ user.profile.years_together }} 
+        {% endif %}
+    </p>
+    <p>
+        {{ user.profile.partner_bio }}
+    </p>
+
+</div>
+</div>
+
+{% endblock %}

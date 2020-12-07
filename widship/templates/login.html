@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load socialaccount %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'widship/css/login.css' %}">
+
+<div class="container">
+  <a class="btn btn-lg btn-social btn-facebook" href="{% provider_login_url "facebook" method="oauth2" %}">
+    <i class="fab fa-facebook-f"></i> Sign in with Facebook
+  </a>
+</div>
+
+  <br>
+  <p><strong>-- OR --</strong></p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+  </form>
+
+  <a href='accounts/signup/'>Sign Up</a>
+{% endblock %}

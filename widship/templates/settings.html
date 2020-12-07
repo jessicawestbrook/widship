@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'widship/css/settings.css' %}">
+
+<div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Share</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Share Widship
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="rateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Rate</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          What do you think about Widship?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Permanently Delete Account</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to do this?  It can't be undone.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Delete account</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div id="settings" class="tabcontent">
+    <h1>Widship Settings</h1>
+
+    <ul class="list-group">
+        <!--
+        <a><li class="list-group-item list-group-item-action"><i class="far fa-bell"></i> Push Notifications 
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span></input>
+              </label>
+            </li></a>
+        -->
+        <a data-toggle="modal" data-target="#shareModal" href="#"><li class="list-group-item list-group-item-action"><i class="fas fa-share"></i> Share Widship</li></a>
+        <a data-toggle="modal" data-target="#rateModal" href="#"><li class="list-group-item list-group-item-action"><i class="fas fa-star"></i> Rate Us</li></a>
+        <a href="../accounts/password/change"><li class="list-group-item list-group-item-action"><i class="fas fa-lock"></i> Change Password</li></a>
+        <a href="/contribute"><li class="list-group-item list-group-item-action"><i class="fas fa-donate"></i> Contribute</li></a>
+        <a href="/contact_form"><li class="list-group-item list-group-item-action"><i class="fas fa-envelope"></i> Contact Us</li></a>
+        <a href="/accounts/logout/"><li class="list-group-item list-group-item-action"><i class="fas fa-sign-out-alt"></i> Log Out</li></a>
+        <a data-toggle="modal" data-target="#deleteAccountModal" href="#"><li class="list-group-item list-group-item-action"><i class="fas fa-trash"></i> Delete Account</li></a>
+    </ul>
+</div>
+
+{% endblock %}

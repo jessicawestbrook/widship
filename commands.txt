@@ -1,0 +1,72 @@
+Start up virtual env:
+widship_virtualenv\Scripts\activate
+
+django-admin startproject widship
+django-admin startapp admin
+
+python manage.py makemigrations
+python manage.py migrate
+
+python manage.py runserver
+python manage.py runsslserver
+
+python manage.py createsuperuser
+
+Log into database:
+psql -d widship -U postgres    
+
+
+Many to many relationships:
+https://stackoverflow.com/questions/48359845/django-how-to-restrict-profile-page-to-only-friends 
+
+Forms:
+https://tutorial.djangogirls.org/en/django_forms/ 
+https://www.geeksforgeeks.org/python-uploading-images-in-django/ 
+
+Geographic search:
+https://stackoverflow.com/questions/58273590/django-get-visitors-location 
+https://stackoverflow.com/questions/37603454/calculating-near-gps-coordinates-in-django 
+
+List friends:
+https://stackoverflow.com/questions/54965898/listing-all-friend-requests-using-django-friendship 
+
+Install geospatial libraries:
+https://pypi.org/project/Shapely/ 
+https://stackoverflow.com/questions/13144158/python-geos-and-shapely-on-windows-64 
+https://www.enterprisedb.com/downloads/postgres-postgresql-downloads 
+https://trac.osgeo.org/osgeo4w/ 
+http://winnie.postgis.net/download/windows/pg96/buildbot/ 
+https://sandbox.idre.ucla.edu/sandbox/tutorials/installing-gdal-for-windows 
+https://docs.djangoproject.com/en/3.1/ref/contrib/gis/install/geolibs/#proj4 
+
+Learn Django:
+https://djangobook.com
+
+Start up virtual environment:
+https://stackoverflow.com/questions/56778211/error-message-mkvirtualenv-is-not-recognized-as-an-internal-or-external-command
+
+User profile:
+https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html 
+
+Facebook login:
+https://medium.com/@jinkwon711/django-allauth-facebook-login-b536444cbc6b 
+https://stackoverflow.com/questions/49350221/django-2-0-allauth-facebook-2018?rq=1 
+
+Postman:
+https://django-postman.readthedocs.io/en/latest/ 
+
+News feed:
+https://django-activity-stream.readthedocs.io/en/latest/ 
+
+Friendships:
+https://github.com/revsys/django-friendship 
+
+Geodjango:
+https://stackoverflow.com/questions/49139044/geodjango-on-windows-could-not-find-the-gdal-library-oserror-winerror-12 
+https://realpython.com/location-based-app-with-geodjango-tutorial/ 
+
+Postgres admin:
+http://127.0.0.1:50464/browser/ 
+
+Get Linux commands on Windows:
+https://cygwin.com/install.html 
