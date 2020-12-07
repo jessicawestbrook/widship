@@ -131,7 +131,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'widship',
         'USER': 'postgres',
-        'PASSWORD': 'TsIrk567h',
+        'PASSWORD': 'mypw',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     },
