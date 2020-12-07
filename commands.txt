@@ -2,6 +2,8 @@ Start up virtual env:
 widship_virtualenv\Scripts\activate
 
 Push updates to github:
+git add commands.txt
+git commit -m "update commands"
 git push -u origin main
 
 django-admin startproject widship
