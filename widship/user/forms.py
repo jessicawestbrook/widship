@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from .models import Profile, User
+from django.utils.safestring import mark_safe
 
 
 class ProfileForm(ModelForm):

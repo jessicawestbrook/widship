@@ -5,7 +5,7 @@
 {% load bootstrap4 %}
 
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'widship/css/search.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'widship/css/profile_list.css' %}">
 
 <script>
 function updateTextInput(val) {
@@ -15,102 +15,26 @@ function updateTextInput(val) {
 
 <h1>Search Users</h1>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+{% include "search_results_search_bar.html" %}
 
-  <div  id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Distance
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item">10<input type="range" min="10" max="100" step="10" value="20" id="distance-slidebar" onchange="updateTextInput(this.value);">100</a>
-          <a class="dropdown-item"><p id="textInput">20</p></a>
-          <a class="dropdown-item">
-            <label class="radio-inline"><input type="radio" name="distance-unit" value="miles" checked>Miles</label>
-            <label class="radio-inline"><input type="radio" name="distance-unit" value="km">Kilometers</label>
-          </a>
-      </div>
-      </li>
-
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Age
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item">20<input type="range" min="20" max="100" step="10" value="100" id="age-slidebar">100</a>
-        </div>
-      </li>
-
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Gender
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item"><label><input type="radio" name="gender" value="both" checked>Both</label></a>
-          <a class="dropdown-item"><label><input type="radio" name="gender" value="women">Women</label></a>
-          <a class="dropdown-item"><label><input type="radio" name="gender" value="men">Men</label></a>
-        </div>
-      </li>
-
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Sort
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item"><label><input type="radio" name="sort" value="distance" checked>Distance</label></a>
-          <a class="dropdown-item"><label><input type="radio" name="sort" value="age">Age</label></a>
-        </div>
-      </li>
-    
-    <li class="nav-item dropdown">
-    <form method="GET" action="/user/name_search" class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search Users" aria-label="Search">
-    </form>
-  </li>
-  <li class="nav-item dropdown">
-    <a><button type=submit class="btn btn-secondary"><i class="fas fa-filter"></i> Apply Filters</button></a>
-  </li>
-</ul>
-  </div>
-</nav>
 <br/>
 
-{% for user in search_results %}
+<p>{{ search_results | length }} results returned</p>
 
-<div class="card">
-    <img class="card-img-top profile-img" src="{% static 'icons/default_avatar.png' %}" alt="Card image">
-    <div class="card-body">
-      <h4 class="card-title">{{ user.profile_name }}</h4>
-      <p class="card-text">
-        {% if user.birth_date %}
-        Age {{user.age}}<br/>
-        {% endif %}
-        {% if user.gender %}
-            {{ user.gender }} <br/>
-        {% endif %}
-        {% if user.city %}
-            From {{ user.city }}
-            {% if user.state %}, {{user.state}}{% endif %}
-            {% if user.country %} {{user.country}}{% endif %}
-            <br/>
-        {% endif %}
-        {% if user.bio %}
-            {{ user.bio }} 
-        {% endif %}
-      </p>
-      <a href="#" class="btn btn-primary">See Profile</a>
-    </div>
-  </div>
-  <br/>
+<div class="container">
+
+{% for user_result in search_results %}
+
+  {% if forloop.counter0|divisibleby:3 %}<div class="row">{% endif %}
+    <div class="col-md-4">{% include "profile_card_search.html" %}</div>
+  {% if forloop.counter|divisibleby:3 or forloop.last %}</div>{% endif %}
 
 {% empty %}
 
-  <p>
-    No results.  Try expanding your search criteria.
-  </p>
+  <p>No results.  Try expanding your search criteria.</p>
 
 {% endfor %}
+
+</div>
 
 {% endblock %}

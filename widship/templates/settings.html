@@ -5,21 +5,21 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'widship/css/settings.css' %}">
 
-<div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Share</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Contact Us</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          Share Widship
+          <p>Contact us by sending an email to <a href="mailto: widship@gmail.com">widship@gmail.com</a></p>
+          <a href="mailto: widship@gmail.com"><button type="button" class="btn btn-primary">Contact</button></a>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
@@ -55,12 +55,35 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          Are you sure you want to do this?  It can't be undone.
+        <div class="modal-body"><p>Are you sure you want to do this?  It can't be undone.</p>
+          <form id='delete' action="{% url 'user:delete_user_view' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+        <button id="delete-button" type="submit" class="btn btn-danger">Permanently Delete My Account</button>
+        </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Delete account</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="contributeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Contribute to Widship</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Contribute to Widship using CashApp.  Donations are always appreciated as we continue to update the site and expand the number of users.  Our cashtag is <a href="https://cash.app/$Torok13">$Torok13</a>.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="https://cash.app/$Torok13"><button type="button" class="btn btn-primary">Contribute</button></a>
         </div>
       </div>
     </div>
@@ -68,8 +91,8 @@
 
 
 <div id="settings" class="tabcontent">
+  <div class="col-lg-6">
     <h1>Widship Settings</h1>
-
     <ul class="list-group">
         <!--
         <a><li class="list-group-item list-group-item-action"><i class="far fa-bell"></i> Push Notifications 
@@ -79,14 +102,13 @@
               </label>
             </li></a>
         -->
-        <a data-toggle="modal" data-target="#shareModal" href="#"><li class="list-group-item list-group-item-action"><i class="fas fa-share"></i> Share Widship</li></a>
-        <a data-toggle="modal" data-target="#rateModal" href="#"><li class="list-group-item list-group-item-action"><i class="fas fa-star"></i> Rate Us</li></a>
-        <a href="../accounts/password/change"><li class="list-group-item list-group-item-action"><i class="fas fa-lock"></i> Change Password</li></a>
-        <a href="/contribute"><li class="list-group-item list-group-item-action"><i class="fas fa-donate"></i> Contribute</li></a>
-        <a href="/contact_form"><li class="list-group-item list-group-item-action"><i class="fas fa-envelope"></i> Contact Us</li></a>
-        <a href="/accounts/logout/"><li class="list-group-item list-group-item-action"><i class="fas fa-sign-out-alt"></i> Log Out</li></a>
-        <a data-toggle="modal" data-target="#deleteAccountModal" href="#"><li class="list-group-item list-group-item-action"><i class="fas fa-trash"></i> Delete Account</li></a>
+        <a href="../accounts/password/change"><li class="list-group-item list-group-item-action"><h3><i class="fas fa-lock"></i> Change Password</h3></li></a>
+        <a data-toggle="modal" data-target="#contributeModal" href="#"><li class="list-group-item list-group-item-action"><h3><i class="fas fa-donate"></i> Contribute</h3></li></a>
+        <a data-toggle="modal" data-target="#contactModal" href="#"><li class="list-group-item list-group-item-action"><h3><i class="fas fa-envelope"></i> Contact Us</h3></li></a>
+        <a href="/accounts/logout/"><li class="list-group-item list-group-item-action"><h3><i class="fas fa-sign-out-alt"></i> Log Out</h3></li></a>
+        <a data-toggle="modal" data-target="#deleteAccountModal" href="#"><li class="list-group-item list-group-item-action"><h3><i class="fas fa-trash"></i> Delete Account</h3></li></a>
     </ul>
+  </div>
 </div>
 
 {% endblock %}

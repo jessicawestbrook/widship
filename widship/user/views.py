@@ -1,4 +1,4 @@
-from .forms import ProfileForm, NameSearchForm
+from .forms import ProfileForm, NameSearchForm #, DeleteUserForm
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView, ListView, DetailView
@@ -7,13 +7,32 @@ from django.contrib.gis.db.models.functions import Distance
 from django.contrib.auth.models import User
 from logging import Logger
 from ipware import get_client_ip
-from .models import Profile
+from .models import Profile, User
 from geopy.geocoders import Nominatim
 import requests
 from django.contrib.gis.geos import Point, fromstr
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.urls import reverse
 
+
+
+@login_required
+def delete_user_view(request):
+    pass
+    try:
+        u = User.objects.get(username = request.user.username)
+        u.delete()          
+
+    except User.DoesNotExist:
+        messages.error(request, "User does not exist")    
+        return render(request, 'signup.html')
+
+    except Exception as e: 
+        return render(request, 'settings.html')
+
+    return render(request, 'login.html', {messages: messages.success(request, "Your account has been deleted")}) 
 
 class NameSearchPage(ListView):
     model = Profile
@@ -41,15 +60,15 @@ class ProfileFormPage(LoginRequiredMixin, TemplateView):
     model = Profile
     template_name = 'profile_form.html'
 
-class ProfilePage(TemplateView):
+class ProfilePage(LoginRequiredMixin, TemplateView):
     model = Profile
     template_name = 'profile_view.html'
 
-class ProfileDetailPage(TemplateView):
+class ProfileDetailPage(LoginRequiredMixin, TemplateView):
     model = Profile
     template_name = 'profile_view.html'
 
-class SearchPage(TemplateView):
+class SearchPage(LoginRequiredMixin, TemplateView):
     template_name = 'search_results.html'
     model = Profile
     gps_coords = False
@@ -82,7 +101,8 @@ class SearchPage(TemplateView):
         logger = Logger('logger')
         #profile = get_object_or_404(Profile, pk=self.user.id)
         geolocator = Nominatim(user_agent="widship")
-        self.location_result = geolocator.geocode("2215 Dunlap Rd Kimball, MI")
+        self.location_result = geolocator.geocode("175 5th Avenue NYC")
+        print(str(self.location_result.address))
         logger.info(msg='location: ' + str(self.location_result))
         self.gps_coords = fromstr(f'Point({self.location_result.longitude} {self.location_result.latitude})', srid=4326)
         return self

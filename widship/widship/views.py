@@ -24,6 +24,3 @@ class TermsPage(TemplateView):
 
 class SettingsPage(LoginRequiredMixin, TemplateView):
     template_name = 'settings.html'
-
-class SharePage(TemplateView):
-    template_name = 'share.html'

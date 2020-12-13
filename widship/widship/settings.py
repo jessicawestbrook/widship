@@ -66,20 +66,19 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook', 
 
     'user',
+    'ipware',
     'friendship',
     'bootstrap4',
     'friends',
     'messaging',
     'notifications',
-    'contact',
     'forum',
     'sslserver',
-    'ipware',
-    'geopy',
     'django_countries',
     'uszipcode',
     'mathfilters',
     'contact_form',
+    'requests',
 
     'dj_pagination',
     'postman',
@@ -88,8 +87,11 @@ INSTALLED_APPS = [
     'mailer',
 
     'actstream',
+    'stdimage',
+    'pwa',
+    'django_extensions',
     'widship.apps.WidshipConfig',
-
+    'geopy',
 ]
 
 MIDDLEWARE = [
@@ -131,7 +133,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'widship',
         'USER': 'postgres',
-        'PASSWORD': 'mypw',
+        'PASSWORD': 'TsIrk567h',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     },
@@ -140,6 +142,22 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
+
+PWA_APP_NAME = 'Widship'
+PWA_APP_DESCRIPTION = 'Social networking site for widows.'
+PWA_APP_THEME_COLOR = '#0A0302' 
+PWA_APP_BACKGROUND_COLOR = '#ffaa80' 
+PWA_APP_DISPLAY = 'standalone' 
+PWA_APP_SCOPE = '/' 
+PWA_APP_ORIENTATION = 'any' 
+PWA_APP_START_URL = '/' 
+PWA_APP_STATUS_BAR_COLOR = 'default' 
+PWA_APP_ICONS = [ { 'src': '/static/icons/eternity_32_32.png', 'sizes': '32x32' } ] 
+PWA_APP_ICONS_APPLE = [ { 'src': '/static/icons/eternity_32_32.png', 'sizes': '32x32' } ] 
+#PWA_APP_SPLASH_SCREEN = [ { 'src': '/static/images/icons/splash-640x1136.png', 'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)' } ] 
+#PWA_APP_DIR = 'ltr' 
+PWA_APP_LANG = 'en-US'
+PWA_APP_DEBUG_MODE = True
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -206,6 +224,26 @@ SOCIALACCOUNT_PROVIDERS = \
         'EXCHANGE_TOKEN': True,
         'LOCALE_FUNC': lambda request: 'en_US',
         'VERIFIED_EMAIL': False}}
+
+POSTMAN_I18N_URLS = False  # default is False
+POSTMAN_DISALLOW_ANONYMOUS = True  # default is False
+POSTMAN_DISALLOW_MULTIRECIPIENTS = False  # default is False
+POSTMAN_DISALLOW_COPIES_ON_REPLY = False  # default is False
+POSTMAN_DISABLE_USER_EMAILING = True  # default is False
+POSTMAN_FROM_EMAIL = 'from@host.tld'  # default is DEFAULT_FROM_EMAIL
+POSTMAN_PARAMS_EMAIL = 'jessicawestbrook88@gmail.com'  # default is None
+POSTMAN_AUTO_MODERATE_AS = True  # default is None
+POSTMAN_SHOW_USER_AS = 'get_full_name'  # default is None
+POSTMAN_NAME_USER_AS = 'username'  # default is None
+POSTMAN_QUICKREPLY_QUOTE_BODY = True  # default is False
+POSTMAN_NOTIFIER_APP = 'pinax.notifications'  # default is 'notification'
+POSTMAN_MAILER_APP = 'mailer'  # default is 'mailer'
+POSTMAN_AUTOCOMPLETER_APP = {
+    'name': '',  # default is 'ajax_select'
+    'field': '',  # default is 'AutoCompleteField'
+    'arg_name': '',  # default is 'channel'
+    'arg_default': 'postman_friends',  # no default, mandatory to enable the feature
+}  # default is {}
 
 ACTSTREAM_SETTINGS = {
     #'MANAGER': 'widship.managers.WidshipActionManager',

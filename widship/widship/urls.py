@@ -26,12 +26,13 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('favicon.ico', RedirectView.as_view(url='/static/icons/eternity_16_16.png', permanent=True)),
+    url('', include('pwa.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('messages/', include('postman.urls', namespace='postman')),
+    path('messaging/', include('postman.urls', namespace='messaging')),
     path('activity/', include('actstream.urls')),
     path('friendship/', include('friendship.urls')),
-    path('friends/', include('friends.urls')),
+    path('friends/', include('friends.urls', namespace='friends')),
     path('user/', include('user.urls')),
     path('', views.HomePage.as_view(), name='home'),
     path('settings', views.SettingsPage.as_view(), name='settings'),
@@ -41,6 +42,6 @@ urlpatterns = [
     path('privacy', views.PrivacyPage.as_view(), name='privacy'),
     path('login', auth_views.LoginView.as_view(template_name="login.html"), name='login'),
     path('logout', auth_views.LogoutView.as_view(), name='logout'),
-    path('contact/', include('contact_form.urls')),
+    url(r"^notifications/", include("pinax.notifications.urls", namespace="pinax_notifications")),
 ] + static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
 

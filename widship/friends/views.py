@@ -6,9 +6,18 @@ from friendship.models import Friend, Follow, Block
 from django.apps import apps
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
-
+@login_required
+def create_friend_request(request, username):
+    other_user = User.objects.get(username = username)
+    Friend.objects.add_friend(
+        request.user,                               # The sender
+        other_user,                                 # The recipient
+        message='Hi! I would like to add you')      # This message is optional
+    messages.success(request, "You've sent a friend request to " + other_user.profile.profile_name)
 
 class FriendsPage(LoginRequiredMixin, ListView):
     Profile = apps.get_model('user', 'Profile')

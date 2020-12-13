@@ -1,0 +1,36 @@
+{% load bootstrap4 %}
+{% load static %}
+
+<div class="profile-card">
+    <div class="card">
+          <img class="card-img-top profile-img" src=
+            {% if friend.profile.profile_photo %}
+              {{ friend.profile.profile_photo.url }}
+            {% else %}
+              "{% static 'icons/default_avatar.png' %}" 
+            {% endif %}
+            alt="Profile image">
+        <div class="card-body">
+          <h4 class="card-title">{{ friend.profile.profile_name }}</h4>
+          <p class="card-text">
+          {% if friend.profile.birth_date %}
+          Age {{friend.profile.age}}<br/>
+          {% endif %}
+          {% if friend.profile.gender %}
+              {{ friend.profile.gender }} <br/>
+          {% endif %}
+          {% if friend.profile.city %}
+              From {{ friend.profile.city }}
+              {% if friend.profile.state %}, {{friend.profile.state}}{% endif %}
+              {% if friend.profile.country %} {{friend.profile.country}}{% endif %}
+              <br/>
+          {% endif %}
+          {% if friend.profile.bio %}
+            {{ friend.profile.bio }} <br/>
+            {% endif %}
+          <a href="{{ friend.username }}" class="btn btn-primary">See Profile</a>
+          <a href="{% url 'messaging:write' friend.username %}" class="btn btn-primary">Message</a>
+    
+      </div>
+    </div>
+    </div>

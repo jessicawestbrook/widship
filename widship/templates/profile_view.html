@@ -15,12 +15,15 @@
 <div class="profile">
     <p>
         {% if user.profile.profile_photo %}
-            <img class="profile-photo" src="{{ user.profile.profile_photo.url }}" alt="Profile Photo">
+            <img class="profile-photo" src="{{ user.profile.profile_photo.url }}"
         {% else %}
-            <img class="profile-photo" src="{% static 'icons/default_avatar.png' %}" alt="Profile Photo">
+            <img class="profile-photo" src="{% static 'icons/default_avatar.png' %}" 
         {% endif %}
+        alt="Profile Photo">
     </p>
-    <h1 id="name" class="card-title">{% firstof user.profile.profile_name user.get_full_name %} <a href='/user/profile_form'><i class="fas fa-edit"></i></a></h1>
+    <h1 id="name" class="card-title">{% firstof user.profile.profile_name user.get_full_name %} 
+        <a href='/user/profile_form'>
+            <i class="fas fa-edit"></i></a></h1>
 
         {% if user.profile.birth_date %}
             Age {{user.profile.age}}<br/>
