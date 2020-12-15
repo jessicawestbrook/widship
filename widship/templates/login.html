@@ -7,13 +7,24 @@
 <link rel="stylesheet" type="text/css" href="{% static 'widship/css/login.css' %}">
 
 <div class="container">
+  <div class="row align-items-center">
+    <div class="col-lg">
+      <h1>Welcome to Widship</h1>
+      <p>Widship is a social networking site for widows and widowers.</p>
+      {# https://www.shutterstock.com/image-photo/webcam-pc-screen-view-during-group-1694685349 #}
+      <img class="splash-photo" src="{% static 'icons/group_call.jpg' %}" />
+    </div>
+
+    <div class="col-lg">
+      <br/>
   <a class="btn btn-lg btn-social btn-facebook" href="{% provider_login_url "facebook" method="oauth2" %}">
     <i class="fab fa-facebook-f"></i> Sign in with Facebook
   </a>
-</div>
 
-  <br>
+  <br/>
+  <br/>
   <p><strong>-- OR --</strong></p>
+ 
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
@@ -21,4 +32,9 @@
   </form>
 
   <a href='accounts/signup/'>Sign Up</a>
+
+</div>
+</div>
+</div>
+
 {% endblock %}

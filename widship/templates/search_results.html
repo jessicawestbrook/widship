@@ -2,8 +2,6 @@
 
 {% block content %}
 
-{% load bootstrap4 %}
-
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'widship/css/profile_list.css' %}">
 
@@ -26,7 +24,7 @@ function updateTextInput(val) {
 {% for user_result in search_results %}
 
   {% if forloop.counter0|divisibleby:3 %}<div class="row">{% endif %}
-    <div class="col-md-4">{% include "profile_card_search.html" %}</div>
+    <div class="col-lg-4 d-flex">{% include "profile_card_search.html" %}</div>
   {% if forloop.counter|divisibleby:3 or forloop.last %}</div>{% endif %}
 
 {% empty %}

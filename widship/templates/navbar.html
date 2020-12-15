@@ -19,23 +19,23 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'messaging:inbox' %}"><i class="fas fa-comment"></i> Messaging</a>
             </li>
-            <!--
             <li class="nav-item">
-                <a class="nav-link" href="/activity"><i class="fas fa-newspaper"></i> Feed</a>
+                <a class="nav-link" href="/"><i class="fas fa-newspaper"></i> Feed</a>
             </li>
-          -->
             <li class="nav-item">
-                <a class="nav-link" href="/settings"><i class="fas fa-cog"></i> Settings</a>
-            </li>
+              <a class="nav-link" href="/groups"><i class="fas fa-users"></i> Groups</a>
+          </li>
     
           </ul>
-          <form method="GET" action="/user/name_search" class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search Users" aria-label="Search">
+
+          <form method="GET" action="{% url 'user:search' %}" class="form-inline my-2 my-lg-0">
+            <input name="name" class="form-control mr-sm-2" type="search" placeholder="Search Users" aria-label="Search">
             <input type="submit" style="display: none" />
           </form>
     
           {% if user.is_authenticated %}
-            <a href="/user/profile"><button class="btn btn-primary"><i class="fas fa-address-card"> </i> My Profile</button></a>
+            <a href="{% url 'user:profile' user.username %}"><button class="btn btn-primary"><i class="fas fa-address-card"> </i> My Profile</button></a>
+            <a class="nav-link" href="/settings"><i class="fas fa-cog"></i></a>
           {% else %}
             <a href="/login"><button class="btn btn-primary">Login / Sign Up</button></a>
           {% endif %}

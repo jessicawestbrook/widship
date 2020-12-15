@@ -1,0 +1,47 @@
+{% load bootstrap4 %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'widship/css/profile_list.css' %}">
+
+
+<div class="card flex-fill">
+  
+  <img class="card-img-top profile-img" src=
+      {% if group.profile.profile_photo %}
+        {{ group.profile.profile_photo.url }}
+      {% else %}
+        "{% static 'icons/default_avatar.png' %}" 
+      {% endif %}
+        alt="Profile image">
+
+  <div class="card-body">
+    <h4 class="card-title">{{ group.profile.profile_name }}</h4>
+    <p class="card-text">
+
+      {% if group.profile.birth_date %}
+        Age {{group.profile.age}}, 
+      {% endif %}
+
+      {% if group.profile.gender %}
+        {{ group.profile.gender }} 
+      {% endif %}
+      <br/>
+
+      {% if group.profile.city %}From {{ group.profile.city }}{% endif %}
+      {% if group.profile.state %}, {{group.profile.state}}{% endif %}
+      {% if group.profile.country %} {{group.profile.country}}{% endif %}
+      <br/>   
+          
+      {% if group.profile.bio %}
+        {{ group.profile.bio }} 
+      {% endif %}
+
+    </p>
+  </div>
+  <div class="card-body">
+
+    <a href="{{ group.username }}" class="btn btn-primary">See Profile</a>
+    <a href="{% url 'messaging:write' group.username %}" class="btn btn-primary">Message</a>
+
+  </div>
+</div>

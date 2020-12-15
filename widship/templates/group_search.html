@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'widship/css/profile_list.css' %}">
+
+<script>
+function updateTextInput(val) {
+  document.getElementById('textInput').textContent=val; 
+}
+</script>
+
+<h1>Search Groups</h1>
+
+<br/>
+
+<p>{{ search_results | length }} results returned</p>
+
+<div class="container">
+
+{% for group_result in search_results %}
+
+  {% if forloop.counter0|divisibleby:3 %}<div class="row">{% endif %}
+    <div class="col-lg-4 d-flex">{% include "profile_card_group.html" %}</div>
+  {% if forloop.counter|divisibleby:3 or forloop.last %}</div>{% endif %}
+
+{% empty %}
+
+  <p>No results.  Try expanding your search criteria.</p>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

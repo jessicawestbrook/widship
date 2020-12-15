@@ -2,16 +2,16 @@ from django.contrib.gis.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
-from django_countries.fields import CountryField
 from django.apps import apps
-
+from django_countries.fields import CountryField
+from stdimage import StdImageField, JPEGField
 
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     friends = models.ManyToManyField("friendship.Friend", null=True, blank=True)
-    profile_photo = models.ImageField(upload_to='images/', null=True, blank=True)
+    profile_photo = StdImageField(upload_to='media/images/', null=True, blank=True, variations={'profile_card': {'width': 200, 'height': 200}})
     profile_name = models.CharField(max_length=100, null=True, blank=True)
     bio = models.TextField(max_length=1000, null=True, blank=True)
     city = models.CharField(max_length=50, null=True, blank=True)
@@ -20,12 +20,6 @@ class Profile(models.Model):
     gender = models.CharField(max_length=10, null=True, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     gps_coords = models.PointField(blank=True, null=True)
-    partner_profile_photo = models.ImageField(upload_to='images/', null=True, blank=True)
-    partner_name = models.CharField(max_length=100, null=True, blank=True)
-    partner_bio = models.TextField(max_length=1000, null=True, blank=True)
-    anniversary = models.DateField(null=True, blank=True)
-    partner_birth_date = models.DateField(null=True, blank=True)
-    years_together = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.user + ": " + str(self.profile_photo)

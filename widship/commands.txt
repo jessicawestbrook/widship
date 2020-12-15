@@ -29,6 +29,7 @@ psql -d widship -U postgres
 Upgrade pip:
 py -m pip install -U pip
 
+python manage.py collectstatic
 
 Code written in Visual Studio Code editor
 

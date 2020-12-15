@@ -2,7 +2,6 @@
 
 {% block content %}
 
-{% load bootstrap4 %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'widship/css/profile_list.css' %}">
 
@@ -15,7 +14,7 @@
 <div class="container">
 {% for friend in friend_list %}
   {% if forloop.counter0|divisibleby:3 %}<div class="row">{% endif %}
-    <div class="col-md-4">{% include "profile_card.html" %}</div>
+    <div class="col-md-4 d-flex">{% include "profile_card.html" %}</div>
   {% if forloop.counter|divisibleby:3 %}</div>{% endif %}
 
 {% empty %}

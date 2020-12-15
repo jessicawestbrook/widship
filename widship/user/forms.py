@@ -7,9 +7,7 @@ from django.utils.safestring import mark_safe
 class ProfileForm(ModelForm):
     class Meta:
         model = Profile
-        fields = ('user','profile_photo','profile_name','bio','city','state','gender',
-        'birth_date','partner_name','partner_bio','partner_profile_photo','years_together',
-        'anniversary','partner_birth_date')
+        fields = ('user','profile_photo','profile_name','bio','city','state','gender','birth_date')
 
 class NameSearchForm(ModelForm):
     class Meta:

@@ -10,8 +10,6 @@ urlpatterns = [
     path('delete', delete_user_view, name='delete_user_view'),
     path('update_profile', views.update_profile, name='update_profile'),
     path('search', views.SearchPage.as_view(), name='search'),
-    path('name_search', views.NameSearchPage.as_view(), name='name_search'),
     path('profile_form', views.ProfileFormPage.as_view(), name='profile_form'),
-    path('profile', views.ProfilePage.as_view(), name='profile'),
-    path('<str:username>', views.ProfileDetailPage.as_view(), name='profile-detail'),
+    path('<str:username>', views.ProfileDetailPage.as_view(), name='profile'),
 ]

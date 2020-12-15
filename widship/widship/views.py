@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 
 
-class HomePage(TemplateView):
+class HomePage(LoginRequiredMixin, TemplateView):
     template_name = 'index.html'
 
 class AttributionsPage(TemplateView):

@@ -1,4 +1,4 @@
-from .forms import ProfileForm, NameSearchForm #, DeleteUserForm
+from .forms import ProfileForm, NameSearchForm 
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView, ListView, DetailView
@@ -15,12 +15,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
+from friendship.models import Friend
 
 
 
 @login_required
 def delete_user_view(request):
-    pass
     try:
         u = User.objects.get(username = request.user.username)
         u.delete()          
@@ -33,11 +33,6 @@ def delete_user_view(request):
         return render(request, 'settings.html')
 
     return render(request, 'login.html', {messages: messages.success(request, "Your account has been deleted")}) 
-
-class NameSearchPage(ListView):
-    model = Profile
-    template_name = 'search_name.html'
-    form = 'NameSearchForm'
 
 def update_profile(request):
     profile = get_object_or_404(Profile, pk=request.user.id)
@@ -59,18 +54,43 @@ def update_profile(request):
 class ProfileFormPage(LoginRequiredMixin, TemplateView):
     model = Profile
     template_name = 'profile_form.html'
-
-class ProfilePage(LoginRequiredMixin, TemplateView):
-    model = Profile
-    template_name = 'profile_view.html'
+    context_object_name = 'context'
 
 class ProfileDetailPage(LoginRequiredMixin, TemplateView):
     model = Profile
     template_name = 'profile_view.html'
 
+    def get_context_data(self, username):
+        self_flag = False
+        friend_flag = False
+        friends_request_list = []
+        friend_request_flag = False
+        requested_profile_user = User.objects.get(username = username)
+        context = {'requested_profile_user': requested_profile_user}
+
+        # Test if user is self
+        if self.request.user.username == requested_profile_user.username:
+            self_flag = True
+            context['self_flag'] = self_flag
+        
+        # Test if users are friends
+        else:
+            friend_flag = Friend.objects.are_friends(self.request.user, requested_profile_user) == True
+            context['friend_flag'] = friend_flag
+
+        # Test if friend request is pending
+        if friend_flag == False:
+            sent_friend_requests = Friend.objects.sent_requests(user=self.request.user)
+            for user in sent_friend_requests:
+                friends_request_list.append(user.to_user_id)
+            friend_request_flag = requested_profile_user.profile.user_id in friends_request_list
+            context['friend_request_flag'] = friend_request_flag
+        
+        print(context)
+        return context
 class SearchPage(LoginRequiredMixin, TemplateView):
     template_name = 'search_results.html'
-    model = Profile
+    model = User
     gps_coords = False
     location_result = False
 
@@ -137,11 +157,29 @@ class SearchPage(LoginRequiredMixin, TemplateView):
         return self
 
     def user_search(self):
-        self.search_results = Profile.objects.all().annotate(distance=Distance('gps_coords', self.gps_coords)).order_by('distance')
+        exclude_user_id_list = [self.request.user.profile.user_id]
+        user_friends = Friend.objects.friends(self.request.user)
+        if user_friends:
+            for friend in user_friends:
+                exclude_user_id_list.append(friend.id)
+        search_results = Profile.objects.exclude(user_id__in=exclude_user_id_list).annotate(distance=Distance('gps_coords', self.gps_coords)).order_by(self.search_parameters.get('sort'))
+        self.search_results = search_results
+        return self
 
     def get_context_data(self):
-        logger = Logger('logger')
         context = super().get_context_data()
+
+        # Get query parameters
+        search_distance = self.request.GET.get('distance') or '50'
+        search_distance_unit = self.request.GET.get('distance-unit') or 'miles'
+        search_age = self.request.GET.get('age') or 100
+        search_gender = self.request.GET.get('gender') or 'both'
+        search_sort = self.request.GET.get('sort') or 'distance'
+        search_name = self.request.GET.get('name') or ''
+        self.search_parameters = {'distance': search_distance, 'distance_unit': search_distance_unit, 'age': search_age, 'gender': search_gender, 'sort': search_sort, 'name': search_name}
+        print('search_parameters: ', self.search_parameters)
+        context['search_parameters'] = self.search_parameters
+
         # Return query results
         self.client_ip = '68.60.92.109'
         self.get_user_location_from_ip()

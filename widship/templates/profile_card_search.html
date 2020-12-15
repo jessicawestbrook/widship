@@ -1,34 +1,37 @@
 {% load bootstrap4 %}
 {% load static %}
 
-    <div class="card">
+    <div class="card flex-fill">
         <img class="card-img-top profile-img" src=
-          {% if user_result.profile_photo %}
-            {{ user_result.profile_photo.url }}
+          {% if user_result.profile_photo.profile_card.url %}
+            "{{ user_result.profile_photo.profile_card.url }}"
           {% else %}
             "{% static 'icons/default_avatar.png' %}" 
           {% endif %}
-          alt="Card image">
+          alt="Profile Image">
         <div class="card-body">
           <h4 class="card-title">{{ user_result.profile_name }}</h4>
           <p class="card-text">
             {% if user_result.birth_date %}
-            Age {{user_result.age}}<br/>
+            Age {{user_result.age}}
             {% endif %}
+            <br/>
             {% if user_result.gender %}
-                {{ user_result.gender }} <br/>
+                {{ user_result.gender }} 
             {% endif %}
+            <br/>
             {% if user_result.city %}
                 From {{ user_result.city }}
                 {% if user_result.state %}, {{user_result.state}}{% endif %}
                 {% if user_result.country %} {{user_result.country}}{% endif %}
-                <br/>
             {% endif %}
+            <br/>
             {% if user_result.bio %}
-                {{ user_result.bio }} 
+                {{ user_result.bio|slice:":300" }} 
             {% endif %}
+            <br/>
           </p>
-          <a href="{{ user_result.username }}" class="btn btn-primary">See Profile</a>
+          <a href="{% url 'user:profile' user_result.user.username %}" class="btn btn-primary">See Profile</a>
           <a href="{% url 'friends:add' user_result.user.username %}" class="btn btn-primary">Add Friend</a>
           </div>
         </div>

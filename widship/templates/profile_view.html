@@ -8,33 +8,42 @@
 <link rel="stylesheet" type="text/css" href="{% static '/widship/css/profile.css' %}" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 
-<class="profile-card">
-    <div class="card">
-        <div class="card-header">
+
+<div class="card col-lg-8">
+    <div class="card-header">
 
 <div class="profile">
     <p>
-        {% if user.profile.profile_photo %}
-            <img class="profile-photo" src="{{ user.profile.profile_photo.url }}"
+        {% if requested_profile_user.profile.profile_photo %}
+            <img class="profile-photo" src="{{ requested_profile_user.profile.profile_photo.url }}"
         {% else %}
             <img class="profile-photo" src="{% static 'icons/default_avatar.png' %}" 
         {% endif %}
         alt="Profile Photo">
     </p>
-    <h1 id="name" class="card-title">{% firstof user.profile.profile_name user.get_full_name %} 
-        <a href='/user/profile_form'>
-            <i class="fas fa-edit"></i></a></h1>
+    <h1 id="name" class="card-title">{% firstof requested_profile_user.profile.profile_name requested_profile_user.get_full_name %}</h1>
 
-        {% if user.profile.birth_date %}
-            Age {{user.profile.age}}<br/>
+        {% if self_flag == True %}
+            <a href='/user/profile_form'><button class="btn btn-primary"><i class="fas fa-edit"></i> Edit Profile</button></a></h1>
+        {% elif friend_flag == True %}
+            <a href="{% url 'friends:unfriend' requested_profile_user.username %}"><button class="btn btn-secondary"><i class="fas fa-users-slash"></i> Unfriend</button></a>
+            <a href="{% url 'messaging:write' requested_profile_user.username %}"><button class="btn btn-primary"><i class="fas fa-comment"></i> Message</button></a>
+        {% elif friend_request_flag == True %}
+            <button class="btn btn-secondary"><i class="fas fa-user-plus"></i> Friend Request Sent</button>
+        {% else %}
+            <a href="{% url 'friends:add' requested_profile_user.username %}"><button class="btn btn-primary"><i class="fas fa-user-plus"></i> Add Friend</button></a>
         {% endif %}
-        {% if user.profile.gender %}
-            {{ user.profile.gender }} <br/>
+        <br/>
+        {% if requested_profile_user.profile.birth_date %}
+            Age {{requested_profile_user.profile.age}}<br/>
         {% endif %}
-        {% if user.profile.city %}
-            From {{ user.profile.city }}
-            {% if user.profile.state %}, {{user.profile.state}}{% endif %}
-            {% if user.profile.country %} {{user.profile.country}}{% endif %}
+        {% if requested_profile_user.profile.gender %}
+            {{ requested_profile_user.profile.gender }} <br/>
+        {% endif %}
+        {% if requested_profile_user.profile.city %}
+            From {{ requested_profile_user.profile.city }}
+            {% if requested_profile_user.profile.state %}, {{requested_profile_user.profile.state}}{% endif %}
+            {% if requested_profile_user.profile.country %} {{requested_profile_user.profile.country}}{% endif %}
         {% endif %}
 </div>
 </div>
@@ -42,32 +51,7 @@
         <div class="card-text">
     <h3>About Me</h3>
     <p>
-        {{ user.profile.bio }}
-    </p>
-
-    <br/>
-    <br/>
-
-    <h3>Partner profile</h3>
-
-    {{ user.profile.partner_name }}<br/>
-
-    {% if user.profile.partner_profile_photo %}
-        <img class="profile-photo" src="{{ user.profile.partner_profile_photo.url }}" alt="Profile Photo">
-    {% endif %}
-    <p> 
-        {% if user.profile.anniversary %}
-            Anniversary: {{ user.profile.anniversary }} <br/>
-        {% endif %}
-        {% if user.profile.partner_birth_date %}
-            Birthdate: {{ user.profile.partner_birth_date }} <br/>
-        {% endif %}
-        {% if user.profile.years_together %}
-            Years together: {{ user.profile.years_together }} 
-        {% endif %}
-    </p>
-    <p>
-        {{ user.profile.partner_bio }}
+        {{ requested_profile_user.profile.bio }}
     </p>
 
 </div>

@@ -1,7 +1,7 @@
 {% load bootstrap4 %}
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
+  <form method="GET" action="{% url 'user:search' %}" class="form-inline my-2 my-lg-0">
     <div  id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
   
@@ -10,7 +10,7 @@
             Distance
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item">10<input type="range" min="10" max="100" step="10" value="20" id="distance-slidebar" onchange="updateTextInput(this.value);">100</a>
+            <a class="dropdown-item">10<input type="range" name="distance" min="10" max="100" step="10" value={{ search_parameters.distance }} id="distance-slidebar" onchange="updateTextInput(this.value);">100</a>
             <a class="dropdown-item"><p id="textInput">20</p></a>
             <a class="dropdown-item">
               <label class="radio-inline"><input type="radio" name="distance-unit" value="miles" checked>Miles</label>
@@ -24,7 +24,7 @@
             Age
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item">20<input type="range" min="20" max="100" step="10" value="100" id="age-slidebar">100</a>
+            <a class="dropdown-item">20<input name="age" type="range" min="20" max="100" step="10" value={{ search_parameters.age }} id="age-slidebar">100</a>
           </div>
         </li>
   
@@ -33,9 +33,9 @@
             Gender
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item"><label><input type="radio" name="gender" value="both" checked>Both</label></a>
-            <a class="dropdown-item"><label><input type="radio" name="gender" value="women">Women</label></a>
-            <a class="dropdown-item"><label><input type="radio" name="gender" value="men">Men</label></a>
+            <a class="dropdown-item"><label><input type="radio" name="gender" value="both" {% if search_parameters.gender == 'both' %}checked{% endif %}>Both</label></a>
+            <a class="dropdown-item"><label><input type="radio" name="gender" value="women" {% if search_parameters.gender == 'women' %}checked{% endif %}>Women</label></a>
+            <a class="dropdown-item"><label><input type="radio" name="gender" value="men" {% if search_parameters.gender == 'men' %}checked{% endif %}>Men</label></a>
           </div>
         </li>
   
@@ -44,19 +44,21 @@
             Sort
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item"><label><input type="radio" name="sort" value="distance" checked>Distance</label></a>
-            <a class="dropdown-item"><label><input type="radio" name="sort" value="age">Age</label></a>
+            <div class="custom-control custom-radio">
+              <a class="dropdown-item"><label><input type="radio" name="sort" value="distance" {% if search_parameters.sort == 'distance' %}checked{% endif %}>Distance</label></a>
+              <a class="dropdown-item"><label><input type="radio" name="sort" value="birth_date" {% if search_parameters.sort == 'birth_date' %}checked{% endif %}>Age</label></a>
+            </div>
           </div>
         </li>
       
       <li class="nav-item dropdown">
-      <form method="GET" action="/user/name_search" class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search Users" aria-label="Search">
-      </form>
+        <input class="form-control mr-sm-2" type="search" placeholder="Search Users" aria-label="Search" name="name" {% if search_parameters.name %}value={{ search_parameters.name }}{% endif %}>
+      
     </li>
     <li class="nav-item dropdown">
-      <a><button type=submit class="btn btn-secondary"><i class="fas fa-filter"></i> Apply Filters</button></a>
+      <button type=submit class="btn btn-secondary"><i class="fas fa-filter"></i> Apply Filters</button>
     </li>
   </ul>
     </div>
-  </nav>
+  </form>  
+</nav>

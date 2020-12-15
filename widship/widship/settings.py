@@ -60,25 +60,27 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.gis',
 
+    'widship.apps.WidshipConfig',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook', 
 
-    'user',
-    'ipware',
     'friendship',
     'bootstrap4',
     'friends',
     'messaging',
     'notifications',
-    'forum',
     'sslserver',
     'django_countries',
     'uszipcode',
     'mathfilters',
-    'contact_form',
+    'geopy',
+    'user',
+    'ipware',
     'requests',
+    'groups',
 
     'dj_pagination',
     'postman',
@@ -89,9 +91,8 @@ INSTALLED_APPS = [
     'actstream',
     'stdimage',
     'pwa',
+
     'django_extensions',
-    'widship.apps.WidshipConfig',
-    'geopy',
 ]
 
 MIDDLEWARE = [
@@ -179,51 +180,51 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
 ACCOUNT_EMAIL_REQUIRED=True
-ACCOUNT_USERNAME_REQURIED=True
+ACCOUNT_USERNAME_REQUIRED=True
 
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = 'login'
-SOCIAL_AUTH_NEW_USER_REDIRECT_URL = 'profile_form'
-SOCIAL_AUTH_FACEBOOK_KEY = '2718933378320136'  # App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = 'c6966c46dc4bb7c894cf1b6f48d4d631'  # App Secret
-SOCIAL_AUTH_FACEBOOK_WHITELISTED_DOMAINS = ['hempelj.pythonanywhere.com', 'localhost:8000']
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link'] # add this
-SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {       # add this
-  'fields': 'id, name, email, picture.type(large), link'
-}
-SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [                 # add this
-    ('name', 'name'),
-    ('email', 'email'),
-    ('picture', 'picture'),
-    ('link', 'profile_url'),
-]
-SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
-SOCIAL_AUTH_SANITIZE_REDIRECTS = True
-SOCIALACCOUNT_PROVIDERS = \
-    {'facebook':
-       {'METHOD': 'oauth2',
-        'INIT_PARAMS': {'cookie': True},
-        'FIELDS': [
-            'id',
-            'email',
-            'name',
-            'name_format',
-            'picture',
-            'first_name',
-            'last_name',
-            'verified',
-            'locale',
-            'timezone',
-            'link',
-            'gender',
-            'updated_time'],
-        'EXCHANGE_TOKEN': True,
-        'LOCALE_FUNC': lambda request: 'en_US',
-        'VERIFIED_EMAIL': False}}
+# LOGIN_URL = 'login'
+# LOGOUT_URL = 'logout'
+# LOGIN_REDIRECT_URL = '/'
+# LOGOUT_REDIRECT_URL = 'login'
+# SOCIAL_AUTH_NEW_USER_REDIRECT_URL = 'profile_form'
+# SOCIAL_AUTH_FACEBOOK_KEY = '2718933378320136'  # App ID
+# SOCIAL_AUTH_FACEBOOK_SECRET = 'c6966c46dc4bb7c894cf1b6f48d4d631'  # App Secret
+# SOCIAL_AUTH_FACEBOOK_WHITELISTED_DOMAINS = ['hempelj.pythonanywhere.com', 'localhost:8000']
+# SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link'] # add this
+# SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {       # add this
+#   'fields': 'id, name, email, picture.type(large), link'
+# }
+# SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [                 # add this
+#     ('name', 'name'),
+#     ('email', 'email'),
+#     ('picture', 'picture'),
+#     ('link', 'profile_url'),
+# ]
+# SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
+# SOCIAL_AUTH_SANITIZE_REDIRECTS = True
+# SOCIALACCOUNT_PROVIDERS = \
+#     {'facebook':
+#        {'METHOD': 'oauth2',
+#         'INIT_PARAMS': {'cookie': True},
+#         'FIELDS': [
+#             'id',
+#             'email',
+#             'name',
+#             'name_format',
+#             'picture',
+#             'first_name',
+#             'last_name',
+#             'verified',
+#             'locale',
+#             'timezone',
+#             'link',
+#             'gender',
+#             'updated_time'],
+#         'EXCHANGE_TOKEN': True,
+#         'LOCALE_FUNC': lambda request: 'en_US',
+#         'VERIFIED_EMAIL': False}}
 
 POSTMAN_I18N_URLS = False  # default is False
 POSTMAN_DISALLOW_ANONYMOUS = True  # default is False
