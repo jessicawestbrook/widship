@@ -7,4 +7,32 @@
 
 <h1>Create a Group</h1>
 
+<form method="post" enctype="multipart/form-data" action="{% url 'groups:create_group' %}">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <p>
+            <label for="group_name">Group Name</label>
+            <input type="text" class="form-control" id="group_name" name="name" value={{ group.name }}>
+        </p>
+    
+        <p>
+            {% if group.group_photo %}
+                <img class="profile-photo" src="{{ group.profile_photo.profile_card.url }}" alt="Group Profile Photo">
+            {% endif %} 
+        </p>
+        <p>
+            <label for="profile_photo">Upload new group profile photo:</label>
+            <input type="file" class="form-control" id="group_profile_photo" name="profile_photo">
+        </p>
+
+        <p>
+            <label for="group_description">Group Description</label><br>
+            <textarea rows="4" cols="40" class="form-control" id="group_description" name="description">{{ group.description }}</textarea>
+        </p>
+    
+    <button class="btn btn-primary" type="submit">Save Group</button>
+</form>
+    
+
 {% endblock %}

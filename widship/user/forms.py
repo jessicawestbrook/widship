@@ -8,8 +8,3 @@ class ProfileForm(ModelForm):
     class Meta:
         model = Profile
         fields = ('user','profile_photo','profile_name','bio','city','state','gender','birth_date')
-
-class NameSearchForm(ModelForm):
-    class Meta:
-        model = Profile
-        fields = ('user', 'profile_name')

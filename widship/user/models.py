@@ -9,8 +9,8 @@ from stdimage import StdImageField, JPEGField
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
-    friends = models.ManyToManyField("friendship.Friend", null=True, blank=True)
+    user = models.OneToOneField(User, blank=True, on_delete=models.CASCADE)
+    friends = models.ManyToManyField("friendship.Friend", blank=True)
     profile_photo = StdImageField(upload_to='media/images/', null=True, blank=True, variations={'profile_card': {'width': 200, 'height': 200}})
     profile_name = models.CharField(max_length=100, null=True, blank=True)
     bio = models.TextField(max_length=1000, null=True, blank=True)
@@ -20,6 +20,8 @@ class Profile(models.Model):
     gender = models.CharField(max_length=10, null=True, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     gps_coords = models.PointField(blank=True, null=True)
+    create_datetime = models.DateTimeField(auto_now_add=True)
+    updated_datetime = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.user + ": " + str(self.profile_photo)
