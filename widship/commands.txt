@@ -8,7 +8,7 @@ Install Django package:
 python -m pip install django-stdimage 
 
 Push updates to github:
-git add commands.txt
+git add .
 git commit -m "update"
 git push -u origin main
 
