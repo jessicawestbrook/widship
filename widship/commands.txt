@@ -1,12 +1,15 @@
 Start up virtual env:
 ..\widship_virtualenv\Scripts\activate
 
+Start development email smtp server:
+python -m smtpd -n -c DebuggingServer localhost:1025
+
 Install Django package:
 python -m pip install django-stdimage 
 
 Push updates to github:
 git add commands.txt
-git commit -m "update commands"
+git commit -m "update"
 git push -u origin main
 
 django-admin startproject widship
@@ -32,6 +35,15 @@ py -m pip install -U pip
 python manage.py collectstatic
 
 Code written in Visual Studio Code editor
+
+Save user facebook data:
+https://gist.github.com/pedroburon/2999473 
+https://gist.github.com/dchaplinsky/1248728
+
+Sending email:
+https://docs.djangoproject.com/en/dev/topics/email/ 
+https://gist.github.com/andreagrandi/7027319 
+https://medium.com/@_christopher/how-to-send-emails-with-python-django-through-google-smtp-server-for-free-22ea6ea0fb8e 
 
 Standardize images:
 https://johannes.maron.family/django-stdimage/ 

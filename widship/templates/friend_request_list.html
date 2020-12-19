@@ -14,7 +14,10 @@ function updateTextInput(val) {
 
 <div class="container">
 
-{% for user_result in friend_request_list %}
+  {% load friendshiptags %}
+  {% friend_requests request.user %}
+
+{% for user_result in friend_requests %}
 
   {% if forloop.counter0|divisibleby:3 %}<div class="row">{% endif %}
     <div class="col-lg-4 d-flex">{% include "profile_card_search.html" %}</div>

@@ -6,19 +6,32 @@ from friendship.models import Friend, Follow, Block, FriendshipRequest
 from django.apps import apps
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.dispatch import receiver
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from friendship.signals import friendship_request_created
+from django.core.mail import send_mail
 
 
 @login_required
 def create_friend_request(request, username):
     other_user = User.objects.get(username = username)
+    message = 'Hi! I would like to add you.'
+    accept_link = 'https://127.0.0.1:8000/'
     Friend.objects.add_friend(
         request.user,                               # The sender
         other_user,                                 # The recipient
-        message='Hi! I would like to add you')      # This message is optional
-    messages.success(request, "You've sent a friend request to " + other_user.profile.profile_name)
-    return render(request, 'search_results')
+        message=message)      # This message is optional
+    from_user_name = request.user.profile.profile_name or request.user.get_full_name
+    to_user_name = str(other_user.profile.profile_name) or str(other_user.get_full_name) or "No Name"
+    send_mail(
+        subject="You've received a friend request from " + from_user_name + " on Widship!",
+        message=message + '\n\nRespond to this request at ' + accept_link,
+        from_email='widship@gmail.com',
+        recipient_list=[other_user.email],
+        fail_silently=False)
+    messages.success(request, "You've sent a friend request to " + to_user_name)
+    return render(request, 'search_results.html')
 
 class FriendRequestsPage(LoginRequiredMixin, ListView):
     Profile = apps.get_model('user', 'Profile')

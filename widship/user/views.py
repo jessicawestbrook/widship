@@ -1,5 +1,6 @@
+from urllib.request import urlopen
 from .forms import ProfileForm
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView, ListView, DetailView
 from django.forms import ModelForm
@@ -9,15 +10,71 @@ from logging import Logger
 from ipware import get_client_ip
 from .models import Profile, User
 from geopy.geocoders import Nominatim
+from django.template import RequestContext
+from PIL import Image
+#from urllib.request import urlopen
+import urllib3
 import requests
+from io import BytesIO
+from django.core.files.base import ContentFile, File
 from django.contrib.gis.geos import Point, fromstr
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
 from friendship.models import Friend
+from django.dispatch import receiver
+from allauth.account.signals import user_signed_up
 
 
+
+@receiver(user_signed_up)
+def populate_profile(sociallogin, user, **kwargs):    
+    if sociallogin.account.provider == 'facebook':
+        try:
+            user.profile = get_object_or_404(Profile, user=user)
+        except:
+            user.profile = Profile.objects.create(user=user)
+        user_data = user.socialaccount_set.filter(provider='facebook')[0].extra_data
+        #picture_url = user_data['url']
+        #picture_url = user_data['url']
+        #user.profile.fb_link = picture_url
+        print('user_data: ', user_data)
+        print('user_data.email: ', user_data['email'])
+        #print('user_data.url: ', user_data['url'])
+        print('user: ', user)
+        print('user.profile: ', user.profile)
+        try:
+            #picture_url = "http://graph.facebook.com/" + sociallogin.account.uid + "/picture?type=large"
+            #picture_url = "http://graph.facebook.com/" + user_data['id'] + "/picture?type=large"
+            #picture_url = "https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=10113901811345443&height=50&width=50&ext=1610820110&hash=AeTs4e0GeiYcI0RN8Ac"
+            #response = requests.get(picture_url)
+            #picture_url = "http://graph.facebook.com/%s/picture?type=large" % user_data["id"]
+
+            picture_data = user_data['picture']
+            picture_data = picture_data['data']
+            picture_url = picture_data['url']
+            print("picture_url: ", picture_url)
+            photo = urlopen(picture_url)
+            print('photo: ', photo)
+            #print('response: ', response.__dict__)
+            #canvas = Image.new('RGB', (200, 200), 'white')
+            #profile_photo = Image.open(BytesIO(response.content))
+            #profile_photo_blob = BytesIO(response.content)
+            #canvas.save(profile_photo_blob, 'JPEG')  
+            #print('profile_photo_blob: ', profile_photo_blob)
+            #user.profile.profile_photo = profile_photo
+            #user.profile.profile_photo.save(user.username + '.jpg', photo, save=False)
+            user.profile.profile_photo.save(user.username + '.jpg', ContentFile(photo.read()), save=False)
+            #user.profile.profile_photo = profile_photo or None
+        except:
+            print("Couldn't get Facebook profile photo.")  
+        #print('picture_url: ', picture_url)         
+        user.email = user_data['email'] or None
+        user.first_name = user_data['first_name'] or None
+        user.last_name = user_data['last_name'] or None
+        user.profile.save()  
+        return HttpResponse('profile_form.html')
 
 @login_required
 def delete_user_view(request):

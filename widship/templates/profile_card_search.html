@@ -10,7 +10,7 @@
           {% endif %}
           alt="Profile Image">
         <div class="card-body">
-          <h4 class="card-title">{{ user_result.profile_name }}</h4>
+          <h4 class="card-title">{% firstof user_result.profile_name user_result.get_full_name %}</h4>
           <p class="card-text">
             {% if user_result.birth_date %}
             Age {{user_result.age}}

@@ -18,20 +18,14 @@
     <div class="col-lg">
       <br/>
   <a class="btn btn-lg btn-social btn-facebook" href="{% provider_login_url "facebook" method="oauth2" %}">
-    <i class="fab fa-facebook-f"></i> Sign in with Facebook
+    <i class="fab fa-facebook-f"></i> Facebook Login
   </a>
 
   <br/>
   <br/>
-  <p><strong>-- OR --</strong></p>
- 
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-  </form>
 
-  <a href='accounts/signup/'>Sign Up</a>
+  Or <a href='accounts/login/'>Log In</a> or <a href='accounts/signup/'>Sign Up</a> with email instead.
+  
 
 </div>
 </div>

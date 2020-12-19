@@ -23,7 +23,8 @@
     </p>
     <p>
         <label for="profile_photo">Upload new profile photo:</label>
-        <input type="file" class="form-control" id="profile_photo" name="profile_photo">
+        <input type="file" onchange="readURL(this);" class="form-control" id="profile_photo" name="profile_photo">
+        <img class="photo-upload" >
     </p>
 
     <fieldset>
@@ -157,42 +158,6 @@
     <br/>
     <br/>
     
-    <h3>Partner profile (optional)</h3>
-
-    <p>
-        {% if user.profile.partner_profile_photo %}
-            <img class="profile-photo" src="{{ user.profile.partner_profile_photo.url }}" alt="Partner Profile Photo">
-        {% else %}
-            <img class="profile-photo" src="{% static 'icons/default_avatar.png' %}" alt="Partner Profile Photo">
-        {% endif %}
-    </p>
-
-    <div class="form-group">
-    <p>
-        <label for="partner_profile_photo">Upload new partner profile photo:</label>
-        <input type="file" class="form-control" id="partner_profile_photo" name="partner_profile_photo">
-    </p>
-    <p>
-        <label for="partner_name">Partner Name</label><br>
-        <input type="text" class="form-control" id="partner_name" name="partner_name" value={{ user.profile.partner_name }}>
-    </p>
-    <p>
-        <label for="partner_bio">About</label><br>
-        <textarea rows="4" cols="40" class="form-control" id="partner_bio" name="partner_bio">{{ user.profile.partner_bio }}</textarea>
-    </p>
-    <p>           
-        <label for="anniversary">Anniversary</label>
-        <input type="date" class="form-control" id="anniversary" name="anniversary" value={{ user.profile.anniversary }}>
-    </p>
-    <p>           
-        <label for="birthday">Birthdate</label>
-        <input type="date" class="form-control" id="partner_birth_date" name="partner_birth_date" value="{{ user.profile.partner_birth_date }}">
-    </p>
-    <p>
-        <label for="years_together">Years Together</label><br>
-        <input type="text" class="form-control" id="years_together" name="years_together" value={{ user.profile.years_together }}>
-    </p>
-
     <input type="submit" value="Save Profile">
 
   </div>

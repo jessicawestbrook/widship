@@ -11,9 +11,12 @@ from stdimage import StdImageField, JPEGField
 class Profile(models.Model):
     user = models.OneToOneField(User, blank=True, on_delete=models.CASCADE)
     friends = models.ManyToManyField("friendship.Friend", blank=True)
-    profile_photo = StdImageField(upload_to='media/images/', null=True, blank=True, variations={'profile_card': {'width': 200, 'height': 200}})
+    profile_photo = StdImageField(upload_to='images/', null=True, blank=True, variations={'profile_card': {'width': 200, 'height': 200}})
     profile_name = models.CharField(max_length=100, null=True, blank=True)
     bio = models.TextField(max_length=1000, null=True, blank=True)
+    fb_locale = models.CharField(max_length=50, null=True, blank=True)
+    fb_timezone = models.CharField(max_length=50, null=True, blank=True)
+    fb_link = models.CharField(max_length=200, null=True, blank=True)
     city = models.CharField(max_length=50, null=True, blank=True)
     state = models.CharField(max_length=50, null=True, blank=True)
     country = CountryField(max_length=50, null=True, blank=True)
@@ -22,9 +25,6 @@ class Profile(models.Model):
     gps_coords = models.PointField(blank=True, null=True)
     create_datetime = models.DateTimeField(auto_now_add=True)
     updated_datetime = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.user + ": " + str(self.profile_photo)
 
     def calculate_age(self):
         import datetime

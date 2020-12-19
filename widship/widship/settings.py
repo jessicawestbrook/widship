@@ -51,6 +51,7 @@ MEDIA_URL= "/media/"
 # Application definition
 
 INSTALLED_APPS = [
+    'widship.apps.WidshipConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -60,7 +61,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.gis',
 
-    'widship.apps.WidshipConfig',
+    
 
     'allauth',
     'allauth.account',
@@ -92,7 +93,7 @@ INSTALLED_APPS = [
     'stdimage',
     'pwa',
 
-    'django_extensions',
+    
 ]
 
 MIDDLEWARE = [
@@ -182,51 +183,57 @@ AUTHENTICATION_BACKENDS = (
 
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
 ACCOUNT_EMAIL_REQUIRED=True
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_USERNAME_REQUIRED=True
+ACCOUNT_SESSION_REMEMBER =True
+ACCOUNT_USERNAME_MIN_LENGTH = 5
+SOCIALACCOUNT_AUTO_SIGNUP = False
+SOCIALACCOUNT_EMAIL_REQUIRED = ACCOUNT_EMAIL_REQUIRED
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = 'login'
+SIGNUP_REDIRECT_URL = 'profile_form'
 
 
-# SOCIAL_AUTH_NEW_USER_REDIRECT_URL = 'profile_form'
-# SOCIAL_AUTH_FACEBOOK_KEY = '2718933378320136'  # App ID
-# SOCIAL_AUTH_FACEBOOK_SECRET = 'c6966c46dc4bb7c894cf1b6f48d4d631'  # App Secret
-# SOCIAL_AUTH_FACEBOOK_WHITELISTED_DOMAINS = ['hempelj.pythonanywhere.com', 'localhost:8000']
-# SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link'] # add this
-# SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {       # add this
-#   'fields': 'id, name, email, picture.type(large), link'
-# }
-# SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [                 # add this
-#     ('name', 'name'),
-#     ('email', 'email'),
-#     ('picture', 'picture'),
-#     ('link', 'profile_url'),
-# ]
-# SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
-# SOCIAL_AUTH_SANITIZE_REDIRECTS = True
-# SOCIALACCOUNT_PROVIDERS = \
-#     {'facebook':
-#        {'METHOD': 'oauth2',
-#         'INIT_PARAMS': {'cookie': True},
-#         'FIELDS': [
-#             'id',
-#             'email',
-#             'name',
-#             'name_format',
-#             'picture',
-#             'first_name',
-#             'last_name',
-#             'verified',
-#             'locale',
-#             'timezone',
-#             'link',
-#             'gender',
-#             'updated_time'],
-#         'EXCHANGE_TOKEN': True,
-#         'LOCALE_FUNC': lambda request: 'en_US',
-#         'VERIFIED_EMAIL': False}}
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = 'profile_form'
+SOCIAL_AUTH_FACEBOOK_KEY = '2718933378320136'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = 'c6966c46dc4bb7c894cf1b6f48d4d631'  # App Secret
+SOCIAL_AUTH_FACEBOOK_WHITELISTED_DOMAINS = ['hempelj.pythonanywhere.com', 'localhost:8000']
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link'] # add this
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {       # add this
+  'fields': 'id, name, email, picture.type(large), link'
+}
+SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [                 # add this
+    ('name', 'name'),
+    ('email', 'email'),
+    ('picture', 'picture'),
+    ('link', 'profile_url'),
+    ('locale', 'locale')
+]
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
+SOCIAL_AUTH_SANITIZE_REDIRECTS = True
+SOCIALACCOUNT_PROVIDERS = \
+    {'facebook':
+       {'METHOD': 'oauth2',
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'name_format',
+            'picture',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',],
+        'EXCHANGE_TOKEN': True,
+        'LOCALE_FUNC': lambda request: 'en_US',
+        'VERIFIED_EMAIL': False}}
 
 POSTMAN_I18N_URLS = False  # default is False
 POSTMAN_DISALLOW_ANONYMOUS = True  # default is False
@@ -259,9 +266,26 @@ ACTSTREAM_SETTINGS = {
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
+if DEBUG==False:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.sendgrid.net'
+    EMAIL_USE_TLS = False
+    EMAIL_PORT = 25
+    EMAIL_HOST_USER = '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'
+    EMAIL_HOST_PASSWORD = '	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'
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'localhost'
+    EMAIL_PORT = 1025
+    EMAIL_HOST_USER = ''
+    EMAIL_HOST_PASSWORD = ''
+    EMAIL_USE_TLS = False
+    DEFAULT_FROM_EMAIL = 'widship@gmail.com'
+
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EST'
 
 USE_I18N = True
 

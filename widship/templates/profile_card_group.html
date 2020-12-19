@@ -7,41 +7,26 @@
 <div class="card flex-fill">
   
   <img class="card-img-top profile-img" src=
-      {% if group.profile.profile_photo %}
-        {{ group.profile.profile_photo.url }}
-      {% else %}
-        "{% static 'icons/default_avatar.png' %}" 
-      {% endif %}
-        alt="Profile image">
+      {% if group.profile_photo %}
+        {{ group.profile_photo.url }} alt="Profile image">
+      {% endif %}  
 
   <div class="card-body">
-    <h4 class="card-title">{{ group.profile.profile_name }}</h4>
+    <h4 class="card-title">{{ group.profile_name }}</h4>
     <p class="card-text">
 
-      {% if group.profile.birth_date %}
-        Age {{group.profile.age}}, 
-      {% endif %}
-
-      {% if group.profile.gender %}
-        {{ group.profile.gender }} 
-      {% endif %}
-      <br/>
-
-      {% if group.profile.city %}From {{ group.profile.city }}{% endif %}
-      {% if group.profile.state %}, {{group.profile.state}}{% endif %}
-      {% if group.profile.country %} {{group.profile.country}}{% endif %}
-      <br/>   
+      <br/> 
           
-      {% if group.profile.bio %}
-        {{ group.profile.bio }} 
+      {% if group.bio %}
+        {{ group.bio }} 
       {% endif %}
 
     </p>
   </div>
   <div class="card-body">
 
-    <a href="{{ group.username }}" class="btn btn-primary">See Profile</a>
-    <a href="{% url 'messaging:write' group.username %}" class="btn btn-primary">Message</a>
+    <a href="{% url 'groups' group.id %}" class="btn btn-primary">View Group</a>
+    <a href="{% url 'group:join' group.id %}" class="btn btn-primary">Join</a>
 
   </div>
 </div>
